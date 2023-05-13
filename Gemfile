@@ -14,9 +14,6 @@ gem 'pg', '~> 1.1'
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
 
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jbuilder'
-
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -36,15 +33,13 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem "rack-cors"
+gem 'rack-cors'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'byebug'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-  gem 'factory_bot_rails'
-  gem 'rails-controller-testing'
-  gem 'rspec-rails', '~> 6.0.0'
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -52,4 +47,12 @@ group :development do
   # gem "spring"
 end
 
+group :test do
+  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails', '~> 6.0.0'
+  gem 'shoulda-matchers', '~> 5.0'
+end
+
 gem 'jwt'
+gem 'yt', '~> 0.32.0'

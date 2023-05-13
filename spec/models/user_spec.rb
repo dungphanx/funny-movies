@@ -34,4 +34,14 @@ RSpec.describe User, type: :model do
       expect(subject.errors[:password]).to include("can't be blank")
     end
   end
+
+  describe 'callbacks' do
+    describe 'before_save' do
+      let(:user) { create(:user, email: 'USER@EXAMPLE.COM') }
+
+      it 'downcases the email attribute' do
+        expect(user.email).to eq('user@example.com')
+      end
+    end
+  end
 end
