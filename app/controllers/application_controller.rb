@@ -7,9 +7,9 @@ class ApplicationController < ActionController::API
     if request.headers['Authorization'].present?
       token = request.headers['Authorization'].split(' ').last
       begin
-        payload = JWT.decode(token, Rails.application.secrets.secret_key_base)
-        @current_user = User.find(payload[0]['user_id'])
-      rescue JWT::DecodeError
+        payload = Auth.decode(token)
+        @current_user = User.find(payload['user_id'])
+      rescue StandardError
         render json: { error: 'Invalid token' }, status: :unauthorized
       end
     else

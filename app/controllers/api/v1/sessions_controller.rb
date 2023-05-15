@@ -7,35 +7,36 @@ module Api
 
       # POST /api/v1/login
       def create
-        user = User.find_by(email: user_params[:email])
-        return create_new_user if user.blank?
+        @user = User.find_by(email: user_params[:email]&.downcase)
+        return process_sign_up if @user.blank?
 
-        if user&.authenticate(user_params[:password])
-          token = encode_token(user_id: user.id)
-          render json: { token: }
-        else
-          render json: { error: 'Invalid email or password' }, status: :unauthorized
-        end
+        return render_login_success if @user&.authenticate(user_params[:password])
+          
+        render json: { error: 'Invalid email or password' }, status: :unauthorized
       end
 
       private
 
-      def create_new_user
-        user = User.new(user_params)
-        if user.save
-          token = encode_token(user_id: user.id)
-          render json: { token: }
+      def process_sign_up
+        @user = User.new(user_params)
+        if @user.save
+          render_login_success
         else
-          render json: { error: 'Invalid email or password' }, status: :unauthorized
+          render json: { error: @user.errors.full_messages }, status: :unauthorized
         end
       end
 
       def user_params
-        params.require(:user).permit(:email, :password)
+        params.permit(:email, :password)
+      end
+
+      def render_login_success
+        token = encode_token(user_id: @user.id)
+        render json: { token: token }
       end
 
       def encode_token(payload)
-        JWT.encode(payload, Rails.application.secrets.secret_key_base)
+        Auth.issue(payload)
       end
     end
   end

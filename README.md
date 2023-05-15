@@ -1,20 +1,21 @@
 # TODO
 
 ## Infrastructure
-[] api server\
+[x] api server\
 [] client react\
 [] can build docker
 
 ## Table
 
-[] User (email, password_digest)\
-[] Movie (original_url, description)
+[x] User (email, password_digest)\
+[x] Movie (original_url, description)
 
 ## Controller
-[] login\
-[] create user\
+[x] login\
+[x] create user\
 [] logout\
-[] share movies
+[x] POST share movies
+[x] GET list movies
 
 ## Action Cable
 [] Notify to all client after user shared a movie

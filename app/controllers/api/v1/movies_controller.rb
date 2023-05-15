@@ -23,7 +23,7 @@ module Api
       private
 
       def movie_params
-        params.require(:movie).permit(:url)
+        params.require(:movie).permit(:link)
       end
     end
   end
