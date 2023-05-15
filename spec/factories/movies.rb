@@ -2,8 +2,10 @@
 
 FactoryBot.define do
   factory :movie do
-    link { 'https://www.youtube.com/watch?v=12345678901' }
+    link { "https://www.youtube.com/watch?v=#{SecureRandom.hex(3)}" }
     title { 'Title' }
     description { 'MyText' }
+
+    association :user
   end
 end

@@ -6,17 +6,19 @@ module Api
       skip_before_action :authenticate_user, only: [:index]
 
       def index
-        @movies = Movie.includes(:user).order(created_at: :desc)
-        render json: { data: @movies.as_json(include: { user: { only: :email } }) }
+        page = params[:page] || 1
+        per_page = params[:per_page] || 10
+        movies = Movie.includes(:user).order(created_at: :desc).page(page).per(per_page)
+        render json: { data: movies.as_json(include: { user: { only: :email } }) }
       end
 
       def create
-        @movie = current_user.movies.new(movie_params)
+        movie = current_user.movies.new(movie_params)
 
-        if @movie.save
-          render json: @movie.as_json(include: { user: { only: :email } })
+        if movie.save
+          render json: movie.as_json(include: { user: { only: :email } })
         else
-          render json: { error: @movie.errors, status: :unprocessable_entity }
+          render json: { error: movie.errors }, status: :unprocessable_entity
         end
       end
 

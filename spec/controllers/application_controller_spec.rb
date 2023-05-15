@@ -12,7 +12,7 @@ RSpec.describe ApplicationController, type: :controller do
   describe '#authenticate_user' do
     context 'when the Authorization header is present' do
       let(:user) { create(:user) }
-      let(:token) { JWT.encode({ user_id: user.id }, Rails.application.secrets.secret_key_base) }
+      let(:token) { Auth.issue({ 'user_id' => user.id }) }
 
       before do
         request.headers['Authorization'] = "Bearer #{token}"

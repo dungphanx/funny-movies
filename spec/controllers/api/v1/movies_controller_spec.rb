@@ -4,67 +4,62 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::MoviesController, type: :controller do
   describe 'GET #index' do
-    let!(:user) { create(:user) }
-    let!(:movie) { create(:movie, user:) }
+    it 'returns a list of movies' do
+      user = create(:user)
+      movies = create_list(:movie, 5, user: user)
 
-    it 'returns a success response' do
       get :index
-      expect(response).to be_successful
-    end
 
-    it 'returns the list of movies in descending order of creation time' do
-      get :index
-      expect(assigns(:movies)).to eq(Movie.all.order(created_at: :desc))
-    end
+      expect(response).to have_http_status(:success)
 
-    it 'returns the serialized movie data in the response body' do
-      get :index
-      expect(JSON.parse(response.body)['data']).to eq(Movie.all.as_json(include: { user: { only: :email } }))
+      json_response = JSON.parse(response.body)
+      expect(json_response['data']).to be_present
+      expect(json_response['data'].length).to eq(5)
     end
   end
 
-  # describe 'POST #create' do
-  #   let!(:user) { create(:user) }
-  #   let(:valid_attributes) { { movie: { url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' } } }
-  #   let(:invalid_attributes) { { movie: { url: '' } } }
+  describe 'POST #create' do
+    context 'when user is authenticated' do
+      let(:user) { create(:user) }
+      let(:token) { Auth.issue({ 'user_id' => user.id }) }
 
-  #   context 'when user is authenticated' do
-  #     before do
-  #       request.headers.merge!('Authorization' => "Bearer #{JwtService.encode(user_id: user.id)}")
-  #     end
+      before { request.headers['Authorization'] = "Bearer #{token}" }
 
-  #     context 'with valid attributes' do
-  #       it 'creates a new movie record' do
-  #         expect {
-  #           post :create, params: valid_attributes
-  #         }.to change(Movie, :count).by(1)
-  #       end
+      context 'with valid parameters' do
+        it 'creates a new movie' do
+          movie_params = { link: "https://www.youtube.com/watch?v=#{SecureRandom.hex(3)}" }
 
-  #       it 'returns the serialized movie data in the response body' do
-  #         post :create, params: valid_attributes
-  #         expect(JSON.parse(response.body)).to eq(Movie.last.as_json(include: { user: { only: :email } }))
-  #       end
-  #     end
+          expect { post :create, params: { movie: movie_params } }.to change(Movie, :count).by(1)
+          
+          expect(response).to have_http_status(:success)
 
-  #     context 'with invalid attributes' do
-  #       it 'does not create a new movie record' do
-  #         expect {
-  #           post :create, params: invalid_attributes
-  #         }.not_to change(Movie, :count)
-  #       end
+          json_response = JSON.parse(response.body)
+          expect(json_response['user']['email']).to eq(user.email)
+          expect(json_response['link']).to eq(movie_params[:link])
+        end
+      end
 
-  #       it 'returns the error messages in the response body' do
-  #         post :create, params: invalid_attributes
-  #         expect(JSON.parse(response.body)['error']).to be_present
-  #       end
-  #     end
-  #   end
+      context 'with invalid parameters' do
+        it 'returns an error' do
+          movie_params = { link: '' }
 
-  #   context 'when user is not authenticated' do
-  #     it 'returns an unauthorized response' do
-  #       post :create, params: valid_attributes
-  #       expect(response).to have_http_status(:unauthorized)
-  #     end
-  #   end
-  # end
+          expect {
+            post :create, params: { movie: movie_params }
+          }.to_not change(Movie, :count)
+
+          expect(response).to have_http_status(:unprocessable_entity)
+
+          json_response = JSON.parse(response.body)
+          expect(json_response['error']).to be_present
+        end
+      end
+    end
+
+    context 'when user is not authenticated' do
+      it 'returns an unauthorized error' do
+        post :create, params: { movie: { link: 'https://www.example.com/movie' } }
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end
