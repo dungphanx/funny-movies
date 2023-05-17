@@ -1,10 +1,10 @@
 function MovieList({ movies }) {
   return (
-    <div>
+    <div className='movie-list'>
       {
         movies.map((movie) => {
           return (
-            <div key={movie.id} className='border d-flex p-2 mt-2'>
+            <div key={movie.id} className='border d-flex p-2 mt-2 movie' data-testid="movie-item">
               <div className='video'>
                 <iframe src={`https://www.youtube.com/embed/${movie.uid}?rel=0`} allowFullScreen title={movie.uid} />
               </div>

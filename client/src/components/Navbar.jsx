@@ -7,6 +7,7 @@ function NavBar({ loggedIn, setLoggedIn, setIsSharing }) {
 
   const handleLogin = async () => {
     if (!email || !password) return alert('Email and password are required!');
+
     try {
       const response = await handleRequest('POST', 'login', { email, password });
 
@@ -55,7 +56,7 @@ function NavBar({ loggedIn, setLoggedIn, setIsSharing }) {
             onClick={handleLogin}
             className="btn btn-sm btn-primary"
           >
-            Login
+            Login / Register
           </button>
         </div>
       ) : (

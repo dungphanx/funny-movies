@@ -1,21 +1,52 @@
-# TODO
+# Funny Movies
 
-## Infrastructure
-[x] api server\
-[] client react\
-[] can build docker
+Funny Movies is a web application that allows users to share YouTube videos with each other.
 
-## Table
+## Technologies Used
 
-[x] User (email, password_digest)\
-[x] Movie (original_url, description)
+Funny Movies is built using the following technologies:
 
-## Controller
-[x] login\
-[x] create user\
-[] logout\
-[x] POST share movies
-[x] GET list movies
+- React.js for the front-end
+- Ruby on Rails for the back-end
+- PostgreSQL for the database
 
-## Action Cable
-[] Notify to all client after user shared a movie
+## Installation and Usage
+
+To install and run Funny Movies, follow these steps:
+Clone the repository to your local machine.
+
+For server:
+
+```
+bundle install
+
+rails db:create
+rails db:migrate
+```
+
+For client
+
+```
+cd client
+
+npm install
+```
+
+Start Rails server by `rails server`, start client by `npm start`
+
+Navigate to `http://localhost:3001` in your web browser to use the application.
+
+1.  Clone the repository to your local machine.
+2.  Install the necessary dependencies by running `npm install` in the root directory and `bundle install` in the root directory.
+3.  Create a new PostgreSQL database by running `rails db:create`.
+4.  Run the database migrations by running `rails db:migrate`.
+5.  Copy env.example to .env and config with your setting.
+6.  Start the Rails server by running `rails s`.
+7.  Start the React development server by running `npm start` in the root directory.
+8.  Navigate to `http://localhost:3001` in your web browser to use the application.
+
+## Features
+
+- User registration and login
+- Sharing YouTube videos
+- Viewing a list of shared videos

@@ -3,7 +3,7 @@ import MovieForm from './MovieForm.jsx';
 import MovieList from './MovieList.jsx';
 import handleRequest from '../utils/HandleRequest';
 
-function Movie({ loggedIn, isSharing, setIsSharing, movies, setMovies }) {
+function MovieContent({ loggedIn, isSharing, setIsSharing, movies, setMovies }) {
   useEffect(() => {
     fetchMovies();
   }, []);
@@ -31,4 +31,4 @@ function Movie({ loggedIn, isSharing, setIsSharing, movies, setMovies }) {
   );
 }
 
-export default Movie;
+export default MovieContent;
