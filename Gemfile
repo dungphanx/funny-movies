@@ -9,8 +9,7 @@ ruby '3.2.2'
 gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 
 # Use postgresql as the database for Active Record
-# gem 'pg', '~> 1.1'
-gem 'sqlite3', '~> 1.4'
+gem 'pg', '~> 1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
@@ -41,6 +40,7 @@ group :development, :test do
   gem 'byebug'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
+  gem 'sqlite3', '~> 1.4'
 end
 
 group :development do
