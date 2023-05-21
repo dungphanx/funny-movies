@@ -15,7 +15,7 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 
 # Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 4.0"
+gem "redis", "~> 4.0"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -57,3 +57,4 @@ end
 gem 'jwt'
 gem 'yt', '~> 0.32.0'
 gem 'kaminari', '~> 1.2.1'
+gem 'resque', '~> 2.0'
