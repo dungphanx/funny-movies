@@ -39,3 +39,7 @@
 node_modules
 .DS_Store
 /build
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-*
