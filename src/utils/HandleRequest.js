@@ -18,15 +18,15 @@ const handleRequest = async (method, url, data = null, headers = {}) => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(`Request failed with status ${response.status}: ${errorData}`);
+      const errorMessage = errorData.error || 'Something went wrong';
+      throw new Error(errorMessage);
     }
 
     const responseData = await response.json();
     return responseData;
   } catch (error) {
-    console.error('An unexpected error occurred.');
-    console.error(error.message);
-    throw error; // Rethrow the error for the calling function to handle
+    console.error(error);
+    throw error;
   }
 };
 

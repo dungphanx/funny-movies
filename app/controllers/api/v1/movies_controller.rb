@@ -20,7 +20,7 @@ module Api
           ActionCable.server.broadcast 'notification_channel', movie.as_json(include: { user: { only: :email } })
           render json: movie.as_json(include: { user: { only: :email } })
         else
-          render json: { error: movie.errors }, status: :unprocessable_entity
+          render json: { error: movie.errors.full_messages }, status: :unprocessable_entity
         end
       end
 

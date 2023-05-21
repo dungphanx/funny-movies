@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import handleRequest from '../utils/HandleRequest';
+import { on } from 'events';
 
-function MovieForm({ setIsSharing }) {
+function MovieForm({ setIsSharing, onSharedMovie }) {
   const [youtubeLink, setYoutubeLink] = useState('');
 
   const handleInputChange = (event) => {
@@ -10,11 +11,12 @@ function MovieForm({ setIsSharing }) {
 
   const handleShareClick = async () => {
     try {
-      await handleRequest('POST', 'movies', { movie: { link: youtubeLink } });
+      const responseData = await handleRequest('POST', 'movies', { movie: { link: youtubeLink } });
       setIsSharing(false)
+      onSharedMovie(responseData)
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        alert(error.response.data.error);
+      if (error.message) {
+        alert(error.message);
       }
     }
   };

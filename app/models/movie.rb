@@ -18,6 +18,7 @@ class Movie < ApplicationRecord
 
   def fetch_youtube_data
     return if Rails.env.test?
+    return if link.blank?
 
     begin
       if youtube_video.exists?

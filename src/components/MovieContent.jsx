@@ -19,10 +19,15 @@ function MovieContent({ loggedIn, isSharing, setIsSharing, movies, setMovies }) 
     }
   }
 
+  const onSharedMovie = (movie) => {
+    debugger
+    setMovies([...movies, movie].sort((a, b) => b.id - a.id));
+  }
+
   return (
     <div>
       {loggedIn && isSharing ? (
-        <MovieForm setIsSharing={setIsSharing} />
+        <MovieForm setIsSharing={setIsSharing} onSharedMovie={onSharedMovie}/>
       ) : (
         <MovieList movies={movies} />
       )

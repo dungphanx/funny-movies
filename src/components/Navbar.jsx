@@ -15,8 +15,8 @@ function NavBar({ loggedIn, setLoggedIn, setIsSharing }) {
       localStorage.setItem('token', response.token);
       localStorage.setItem('email', email);
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        alert(error.response.data.error);
+      if (error.message) {
+        alert(error.message);
       }
     }
   };
