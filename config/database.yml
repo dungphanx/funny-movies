@@ -81,4 +81,7 @@ test:
 #
 production:
   <<: *default
-  database: db/production.sqlite3
+  encoding: unicode
+  database: funny_videos_production
+  username: funny_videos
+  password: <%= ENV["FUNNY_VIDEOS_DATABASE_PASSWORD"] %>
