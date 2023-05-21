@@ -20,7 +20,6 @@ function MovieContent({ loggedIn, isSharing, setIsSharing, movies, setMovies }) 
   }
 
   const onSharedMovie = (movie) => {
-    debugger
     setMovies([...movies, movie].sort((a, b) => b.id - a.id));
   }
 

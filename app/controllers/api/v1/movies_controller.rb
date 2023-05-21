@@ -16,8 +16,7 @@ module Api
         movie = current_user.movies.new(movie_params)
 
         if movie.save
-          # Can move to background job
-          ActionCable.server.broadcast 'notification_channel', movie.as_json(include: { user: { only: :email } })
+          MoviesNotificationJob.perform_later(movie.id)
           render json: movie.as_json(include: { user: { only: :email } })
         else
           render json: { error: movie.errors.full_messages }, status: :unprocessable_entity
