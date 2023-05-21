@@ -40,7 +40,6 @@ group :development, :test do
   gem 'byebug'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
-  gem 'sqlite3', '~> 1.4'
 end
 
 group :development do

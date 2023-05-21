@@ -196,8 +196,6 @@ GEM
     rspec-support (3.12.0)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
-    sqlite3 (1.6.3-x86_64-darwin)
-    sqlite3 (1.6.3-x86_64-linux)
     thor (1.2.2)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -229,7 +227,6 @@ DEPENDENCIES
   rails-controller-testing
   rspec-rails (~> 6.0.0)
   shoulda-matchers (~> 5.0)
-  sqlite3 (~> 1.4)
   tzinfo-data
   yt (~> 0.32.0)
 
