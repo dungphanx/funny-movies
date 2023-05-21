@@ -16,6 +16,7 @@ module Api
         movie = current_user.movies.new(movie_params)
 
         if movie.save
+          # Can move to background job
           ActionCable.server.broadcast 'notification_channel', movie.as_json(include: { user: { only: :email } })
           render json: movie.as_json(include: { user: { only: :email } })
         else
